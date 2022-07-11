@@ -7,6 +7,7 @@ setup(
     author='Josh Jackson',
     author_email='joshisabadger@gmail.com',
     license='',
+    url='https://github.com/joshthebadger/lolpy',
     packages=['lolpy'],
     include_package_data=True,
     install_requires=[
