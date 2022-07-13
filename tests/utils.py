@@ -13,3 +13,9 @@ def save_item(item: Dict, filename: str) -> str:
     with open(path, 'w') as foutput:
         json.dump(item, foutput, indent=4)
     return path.as_posix()
+
+
+def get_item(filename: str) -> Dict:
+    path = Path(FIXTURES_DIR, filename)
+    with open(path, 'r') as finput:
+        return json.load(finput)[0]

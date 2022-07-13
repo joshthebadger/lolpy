@@ -8,8 +8,12 @@ from tests import utils
 class TestDTOs(unittest.TestCase):
 
     def test_game_serialisation(self):
-        game = dtos.Game('1234')
-        self.assertIsNotNone(game.gameid)
+        game_dict = utils.get_item('player_game.json')
+        game_id = game_dict['gameid']
+        game = dtos.Game(
+            game_id
+        )
+        self.assertEqual(game.gameid, game_id)
         output_file = utils.save_item(
             game.as_dict(),
             'game.json'
