@@ -11,6 +11,8 @@ class TestDTOs(unittest.TestCase):
         game_dict = utils.get_item('player_game.json')
         game_id = game_dict['gameid']
         game = loaders.load_game(game_dict)
+        for attr in ('gameid', 'date', 'duration'):
+            self.assertIsNotNone(getattr(game, attr))
         self.assertEqual(game.gameid, game_id)
         output_file = utils.save_item(
             game.as_dict(),

@@ -9,7 +9,11 @@ def load_game(row: Dict) -> Game:
     Parses game data from a spreadsheet row represented as a dictionary
     '''
     gameid = parsers.parse_str(row['gameid'])
+    date = parsers.parse_dt(row['date'])
+    duration = parsers.parse_int(row['gamelength'])
     game = Game(
-        gameid
+        gameid,
+        date,
+        duration
     )
     return game
