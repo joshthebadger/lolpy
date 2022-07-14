@@ -19,6 +19,10 @@ def parse_int(value: str, default=0) -> int:
     return default
 
 
+def parse_bool(value: str) -> bool:
+    return bool(parse_int(value))
+
+
 def parse_dt(value: str) -> Optional[datetime]:
     if value is None:
         return None

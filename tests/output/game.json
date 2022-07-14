@@ -1,5 +1,10 @@
 {
     "gameid": "NA1_4211779405",
     "date": "2022-02-12 01:24:07",
-    "duration": 1833
+    "duration": 1833,
+    "game": 1,
+    "league": "UPL",
+    "split": "Summer",
+    "status": "complete",
+    "playoffs": true
 }
