@@ -22,6 +22,12 @@ class TestDTOs(unittest.TestCase):
         )
         print('Game saved to {}'.format(output_file))
 
+    def test_game_deserialisation(self):
+        game_dict = utils.get_item('player_game.json')
+        game = loaders.load_game(game_dict)
+        game2 = dtos.Game.from_dict(game.as_dict())
+        self.assertEqual(game, game2)
+
     def test_generate_game_id(self):
         now = datetime.datetime.now()
         league = 'LCS'
