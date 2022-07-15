@@ -10,17 +10,18 @@ from tests import utils
 class TestDTOs(unittest.TestCase):
 
     def test_game_serialisation(self):
-        game_dict = utils.get_item('player_game.json')
-        game_id = game_dict['gameid']
-        game = loaders.load_game(game_dict)
-        for attr in game.__dict__.keys():
-            self.assertIsNotNone(getattr(game, attr))
-        self.assertEqual(game.gameid, game_id)
-        output_file = utils.save_item(
-            game.as_dict(),
-            'game.json'
-        )
-        print('Game saved to {}'.format(output_file))
+        for filename in ('player_game.json', 'team_game.json'):
+            game_dict = utils.get_item(filename)
+            game_id = game_dict['gameid']
+            game = loaders.load_game(game_dict)
+            for attr in game.__dict__.keys():
+                self.assertIsNotNone(getattr(game, attr))
+            self.assertEqual(game.gameid, game_id)
+            output_file = utils.save_item(
+                game.as_dict(),
+                filename
+            )
+            print('Game saved to {}'.format(output_file))
 
     def test_game_deserialisation(self):
         game_dict = utils.get_item('player_game.json')

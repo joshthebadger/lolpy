@@ -1,7 +1,11 @@
 from typing import Optional
 from datetime import datetime
+import re
 
 INPUT_DT_FORMAT = '%Y-%m-%d %H:%M:%S'
+
+
+OE_ID_REGEX = re.compile(r'oe:(team|player):(?P<id>.+)$')
 
 
 def parse_str(value: str, default=None) -> Optional[str]:
@@ -30,3 +34,10 @@ def parse_dt(value: str) -> Optional[datetime]:
         return datetime.strptime(value, INPUT_DT_FORMAT)
     except ValueError:
         return None
+
+
+def parse_id(value: str) -> Optional[str]:
+    m = OE_ID_REGEX.match(value)
+    if m:
+        return m.groupdict()['id']
+    return value
