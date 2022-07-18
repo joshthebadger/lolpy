@@ -8,6 +8,10 @@ FIXTURES_DIR = TESTS_DIR / 'fixtures'
 OUTPUT_DIR = TESTS_DIR / 'output'
 
 
+def get_games_file_csv(filename) -> Path:
+    return Path(FIXTURES_DIR, filename)
+
+
 def save_item(item: Dict, filename: str) -> str:
     path = Path(OUTPUT_DIR, filename)
     with open(path, 'w') as foutput:
