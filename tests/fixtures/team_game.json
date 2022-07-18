@@ -34,7 +34,7 @@
         "triplekills": "0",
         "quadrakills": "0",
         "pentakills": "0",
-        "firstblood": "0",
+        "firstblood": "1",
         "firstbloodkill": null,
         "firstbloodassist": null,
         "firstbloodvictim": null,

@@ -1,7 +1,12 @@
-from typing import Dict
+from typing import Dict, List
 
 from lolpy import parsers
 from lolpy import dtos
+
+
+def set_attrs(item, row: Dict, attrs: List[str], parser=parsers.parse_int):
+    for attr in attrs:
+        setattr(item, attr, parser(row[attr]))
 
 
 def load_player(row: Dict) -> dtos.Player:
@@ -23,17 +28,23 @@ def load_team(row: Dict) -> dtos.Team:
 
 
 def load_player_game(row: Dict) -> dtos.PlayerGame:
-    return dtos.PlayerGame(
+    player_game = dtos.PlayerGame(
         load_player(row),
         load_team(row),
-        parsers.parse_str(row['position']).lower()
+        parsers.parse_str(row['position']).lower(),
+        parsers.parse_str(row['champion'])
     )
+    set_attrs(player_game, row, dtos.PlayerGame.INTEGER_ATTRS)
+    return player_game
 
 
 def load_team_game(row: Dict) -> dtos.TeamGame:
-    return dtos.TeamGame(
+    team_game = dtos.TeamGame(
         load_team(row)
     )
+    set_attrs(team_game, row, dtos.TeamGame.INTEGER_ATTRS)
+    set_attrs(team_game, row, dtos.TeamGame.BOOL_ATTRS, parsers.parse_bool)
+    return team_game
 
 
 def load_game(row: Dict) -> dtos.Game:
