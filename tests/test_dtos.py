@@ -38,6 +38,11 @@ class TestDTOs(unittest.TestCase):
         self.assertTrue(gameid.endswith(str(game)))
         self.assertTrue(now.strftime(dtos.GAME_ID_FORMAT) in gameid)
 
+    def test_generate_split(self):
+        now = datetime.datetime.now()
+        quarter = (now.month // 4) + 1
+        self.assertEqual(f'Q{quarter}', dtos.Game.generate_split(now))
+
 
 if __name__ == '__main__':
     unittest.main()

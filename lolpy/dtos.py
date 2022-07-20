@@ -101,6 +101,8 @@ class PlayerGame:
 @dataclass
 class TeamGame:
     team: Team
+    side: str
+    result: bool = False
     dragons: int = 0
     elders: int = 0
     heralds: int = 0
@@ -113,6 +115,7 @@ class TeamGame:
     firsttower: bool = False
 
     BOOL_ATTRS = (
+        'result',
         'firstblood',
         'firstdragon',
         'firstherald',
@@ -131,7 +134,8 @@ class TeamGame:
     @classmethod
     def from_dict(cls, data: Dict):
         team_game = cls(
-            Team.from_dict(data['team'])
+            Team.from_dict(data['team']),
+            data['side']
         )
         set_attrs(team_game, chain(cls.INTEGER_ATTRS, cls.BOOL_ATTRS), data)
         return team_game
@@ -139,6 +143,7 @@ class TeamGame:
     def as_dict(self) -> OrderedDict:
         team_game = OrderedDict(
             team=self.team.as_dict(),
+            side=self.side,
             **get_attrs(self, chain(self.INTEGER_ATTRS, self.BOOL_ATTRS))
         )
         return team_game
@@ -150,6 +155,10 @@ class Game:
     @staticmethod
     def generate_game_id(league: str, date: datetime, game: int) -> str:
         return f'{league}_{date.strftime(GAME_ID_FORMAT)}_{game}'
+
+    @staticmethod
+    def generate_split(date: datetime):
+        return f"Q{(date.month // 4) + 1}"
 
     gameid: str
     date: datetime
