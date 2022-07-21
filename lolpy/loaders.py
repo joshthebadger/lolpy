@@ -9,22 +9,21 @@ def set_attrs(item, row: Dict, attrs: List[str], parser=parsers.parse_int):
         setattr(item, attr, parser(row[attr]))
 
 
-def load_player(row: Dict) -> dtos.Player:
-    playerid = parsers.parse_id(row['playerid'])
-    name = parsers.parse_str(row['playername'])
-    return dtos.Player(
-        playerid,
+def load_entity(row: Dict, entity: str, cls: type):
+    entityid = parsers.parse_id(row[f'{entity}id'])
+    name = parsers.parse_str(row[f'{entity}name'], default='Unknown')
+    return cls(
+        entityid,
         name
     )
+
+
+def load_player(row: Dict) -> dtos.Player:
+    return load_entity(row, 'player', dtos.Player)
 
 
 def load_team(row: Dict) -> dtos.Team:
-    teamid = parsers.parse_id(row['teamid'])
-    name = parsers.parse_str(row['teamname'])
-    return dtos.Team(
-        teamid,
-        name
-    )
+    return load_entity(row, 'team', dtos.Team)
 
 
 def load_player_game(row: Dict) -> dtos.PlayerGame:
