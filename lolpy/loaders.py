@@ -4,6 +4,11 @@ from lolpy import parsers
 from lolpy import dtos
 
 
+def slugify(s: str) -> str:
+    # TODO: improve this?
+    return s.replace(' ', '-').lower()
+
+
 def set_attrs(item, row: Dict, attrs: List[str], parser=parsers.parse_int):
     for attr in attrs:
         setattr(item, attr, parser(row[attr]))
@@ -11,7 +16,10 @@ def set_attrs(item, row: Dict, attrs: List[str], parser=parsers.parse_int):
 
 def load_entity(row: Dict, entity: str, cls: type):
     entityid = parsers.parse_id(row[f'{entity}id'])
-    name = parsers.parse_str(row[f'{entity}name'], default='Unknown')
+    name = parsers.parse_str(row[f'{entity}name'], default=f'unknown {entity}')
+    # what about missing ids?
+    if entityid is None:
+        entityid = slugify(name)
     return cls(
         entityid,
         name
@@ -64,6 +72,7 @@ def load_game(row: Dict) -> dtos.Game:
         gameid = dtos.Game.generate_game_id(league, date, game)
     if split is None:
         split = dtos.Game.generate_split(date)
+
     instance = dtos.Game(
         gameid,
         date,
